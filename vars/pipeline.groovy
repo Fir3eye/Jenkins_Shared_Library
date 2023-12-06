@@ -54,6 +54,11 @@ pipeline{
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
+        stage('Trivyfile Scan') {
+            steps{
+                06_trivyFilescan()
+            }
+        }
      }
      post {
          always {
