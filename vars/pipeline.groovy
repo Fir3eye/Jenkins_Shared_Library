@@ -8,6 +8,8 @@ pipeline{
     agent any
     parameters {
         choice(name: 'action', choices: 'create\ndelete', description: 'Select create or destroy.')
+        string(name: 'DOCKER_HUB_USERNAME', defaultValue: 'fir3eye', description: 'Docker Hub Username')
+        string(name: 'IMAGE_NAME', defaultValue: 'youtube', description: 'Docker Image Name')
     }
     tools{
         jdk 'jdk17'
@@ -57,6 +59,23 @@ pipeline{
         stage('Trivyfile Scan') {
             steps{
                 06_trivyFilescan()
+            }
+        }
+        stage('Docker Build'){
+        when { expression { params.action == 'create'}}    
+            steps{
+                script{
+                   def dockerHubUsername = params.DOCKER_HUB_USERNAME
+                   def imageName = params.IMAGE_NAME
+
+                   dockerBuild(dockerHubUsername, imageName)
+                }
+            }
+        }
+        stage('Trivy iamge'){
+        when { expression { params.action == 'create'}}    
+            steps{
+                trivyImage()
             }
         }
      }
