@@ -68,14 +68,14 @@ pipeline{
                    def dockerHubUsername = params.DOCKER_HUB_USERNAME
                    def imageName = params.IMAGE_NAME
 
-                   dockerBuild(dockerHubUsername, imageName)
+                   07_dockerBuild(dockerHubUsername, imageName)
                 }
             }
         }
         stage('Trivy iamge'){
         when { expression { params.action == 'create'}}    
             steps{
-                trivyImage()
+                08_trivyImage()
             }
         }
      }
