@@ -102,8 +102,6 @@ pipeline{
                 12_kubeDelete()
             }
         }
-
-
      }
      post {
          always {
