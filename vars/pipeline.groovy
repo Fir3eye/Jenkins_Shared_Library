@@ -78,6 +78,19 @@ pipeline{
                 08_trivyImage()
             }
         }
+        stage('Run container'){
+        when { expression { params.action == 'create'}}    
+            steps{
+                09_runContainer()
+            }
+        }
+        stage('Remove container'){
+        when { expression { params.action == 'delete'}}    
+            steps{
+                10_removeContainer()
+            }
+        }
+
      }
      post {
          always {
