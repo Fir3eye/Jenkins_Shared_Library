@@ -90,6 +90,19 @@ pipeline{
                 10_removeContainer()
             }
         }
+        stage('Kube deploy'){
+        when { expression { params.action == 'create'}}    
+            steps{
+                11_kubeDeploy()
+            }
+        }
+        stage('kube deleter'){
+        when { expression { params.action == 'delete'}}    
+            steps{
+                12_kubeDelete()
+            }
+        }
+
 
      }
      post {
